@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "gradski-ikonom-dev",
+      "runtimeExecutable": "C:\\Users\\User\\Desktop\\GradskiIkonom\\.claude\\dev.bat",
+      "runtimeArgs": [],
+      "port": 3000
+    }
+  ]
+}
