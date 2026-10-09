@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { buildMetadata } from "@/lib/metadata";
 import { PageIntro } from "@/components/PageIntro";
 import { placeholderContact } from "@/lib/constants";
+import { getSiteSettings } from "@/sanity/lib/data";
 
 export const metadata: Metadata = buildMetadata({
   title: "Контакти",
@@ -9,7 +10,14 @@ export const metadata: Metadata = buildMetadata({
   path: "/kontakti",
 });
 
-export default function KontaktiPage() {
+export const revalidate = 60;
+
+export default async function KontaktiPage() {
+  const siteSettings = await getSiteSettings();
+  const phone = siteSettings?.phone ?? placeholderContact.phone;
+  const email = siteSettings?.email ?? placeholderContact.email;
+  const address = siteSettings?.address ?? placeholderContact.address;
+
   return (
     <PageIntro
       eyebrow="Контакти"
@@ -19,16 +27,22 @@ export default function KontaktiPage() {
       <dl className="mt-12 grid gap-8 sm:grid-cols-3">
         <div>
           <dt className="text-sm font-semibold text-foreground">Телефон</dt>
-          <dd className="mt-2 text-sm text-foreground/60">{placeholderContact.phone}</dd>
+          <dd className="mt-2 text-sm text-foreground/60">{phone}</dd>
         </div>
         <div>
           <dt className="text-sm font-semibold text-foreground">Имейл</dt>
-          <dd className="mt-2 text-sm text-foreground/60">{placeholderContact.email}</dd>
+          <dd className="mt-2 text-sm text-foreground/60">{email}</dd>
         </div>
         <div>
           <dt className="text-sm font-semibold text-foreground">Адрес</dt>
-          <dd className="mt-2 text-sm text-foreground/60">{placeholderContact.address}</dd>
+          <dd className="mt-2 text-sm text-foreground/60">{address}</dd>
         </div>
+        {siteSettings?.workingHours ? (
+          <div>
+            <dt className="text-sm font-semibold text-foreground">Работно време</dt>
+            <dd className="mt-2 text-sm text-foreground/60">{siteSettings.workingHours}</dd>
+          </div>
+        ) : null}
       </dl>
     </PageIntro>
   );

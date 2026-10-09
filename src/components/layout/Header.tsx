@@ -7,11 +7,14 @@ import { Logo } from "./Logo";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { primaryCta, primaryNav } from "@/lib/constants";
+import type { SiteSettings } from "@/sanity/lib/types";
 
-export function Header() {
+export function Header({ siteSettings }: { siteSettings?: SiteSettings | null }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
   const closeMenu = () => setIsMenuOpen(false);
+  const ctaLabel = siteSettings?.primaryCtaLabel ?? primaryCta.label;
+  const ctaHref = siteSettings?.primaryCtaHref ?? primaryCta.href;
 
   return (
     <header className="sticky top-0 z-40 border-b border-foreground/10 bg-background/95 backdrop-blur-sm">
@@ -41,8 +44,8 @@ export function Header() {
         </nav>
 
         <div className="hidden lg:block">
-          <Button href={primaryCta.href} variant="primary">
-            {primaryCta.label}
+          <Button href={ctaHref} variant="primary">
+            {ctaLabel}
           </Button>
         </div>
 
@@ -106,12 +109,12 @@ export function Header() {
             })}
             <div className="mt-3 px-3">
               <Button
-                href={primaryCta.href}
+                href={ctaHref}
                 variant="primary"
                 className="w-full"
                 onClick={closeMenu}
               >
-                {primaryCta.label}
+                {ctaLabel}
               </Button>
             </div>
           </Container>

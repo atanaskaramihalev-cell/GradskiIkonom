@@ -4,7 +4,8 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { SkipLink } from "@/components/layout/SkipLink";
 import { siteConfig } from "@/lib/constants";
-import "./globals.css";
+import { getSiteSettings } from "@/sanity/lib/data";
+import "../globals.css";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -27,7 +28,11 @@ export const metadata: Metadata = {
   description: siteConfig.tagline,
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export const revalidate = 60;
+
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const siteSettings = await getSiteSettings();
+
   return (
     <html
       lang="bg"
@@ -35,11 +40,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="flex min-h-full flex-col font-sans">
         <SkipLink />
-        <Header />
+        <Header siteSettings={siteSettings} />
         <main id="main-content" className="flex-1">
           {children}
         </main>
-        <Footer />
+        <Footer siteSettings={siteSettings} />
       </body>
     </html>
   );

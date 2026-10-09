@@ -20,6 +20,7 @@ export const primaryNav: NavItem[] = [
   { label: "Начало", href: "/" },
   { label: "Услуги", href: "/uslugi" },
   { label: "Как работим", href: "/kak-rabotim" },
+  { label: "Галерия", href: "/galeriya" },
   { label: "Цени", href: "/tseni" },
   { label: "REMIOX", href: "/remiox" },
   { label: "За нас", href: "/za-nas" },
@@ -32,6 +33,6 @@ export const primaryCta = {
 };
 
 export const secondaryCta = {
-  label: "Как работим",
+  label: "Вижте как работим",
   href: "/kak-rabotim",
 };

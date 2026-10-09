@@ -1,9 +1,13 @@
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { placeholderContact, primaryNav, siteConfig } from "@/lib/constants";
+import type { SiteSettings } from "@/sanity/lib/types";
 
-export function Footer() {
+export function Footer({ siteSettings }: { siteSettings?: SiteSettings | null }) {
   const year = new Date().getFullYear();
+  const phone = siteSettings?.phone ?? placeholderContact.phone;
+  const email = siteSettings?.email ?? placeholderContact.email;
+  const address = siteSettings?.address ?? placeholderContact.address;
 
   return (
     <footer className="border-t border-foreground/10 bg-foreground/[0.02]">
@@ -36,9 +40,9 @@ export function Footer() {
         <div>
           <p className="text-sm font-semibold text-foreground">Контакти</p>
           <ul className="mt-4 space-y-2.5 text-sm text-foreground/70">
-            <li>{placeholderContact.phone}</li>
-            <li>{placeholderContact.email}</li>
-            <li>{placeholderContact.address}</li>
+            <li>{phone}</li>
+            <li>{email}</li>
+            <li>{address}</li>
           </ul>
         </div>
 
