@@ -1,7 +1,7 @@
 export const siteConfig = {
   name: "Градски Иконом",
   tagline: "Професионално управление на етажната собственост. Ясно, прозрачно и модерно.",
-  url: "https://www.gradski-ikonom.bg",
+  url: "https://gradskiikonom.com",
   locale: "bg_BG",
 } as const;
 
