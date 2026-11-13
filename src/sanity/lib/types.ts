@@ -38,6 +38,11 @@ export type TrustBadge = {
 
 export type SiteSettings = {
   _id: string;
+  legalName?: string;
+  eik?: string;
+  registeredAddress?: string;
+  manager?: string;
+  vatRegistered?: boolean;
   phone?: string;
   email?: string;
   address?: string;
@@ -51,8 +56,26 @@ export type SiteSettings = {
 
 export type PageContent = {
   _id: string;
-  pageKey: "kak-rabotim" | "za-nas" | "remiox";
+  pageKey?: "kak-rabotim" | "za-nas" | "remiox" | "poveritelnost";
+  slug?: { current: string };
   title: string;
   description?: string;
   body?: PortableTextBlock[];
+};
+
+export type Service = {
+  _id: string;
+  title: string;
+  description?: string;
+  order?: number;
+};
+
+export type PricingPackage = {
+  _id: string;
+  name: string;
+  price?: string;
+  unit?: string;
+  features?: string[];
+  highlighted?: boolean;
+  order?: number;
 };

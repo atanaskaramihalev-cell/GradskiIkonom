@@ -1,22 +1,34 @@
 import type { Metadata } from "next";
 import { buildMetadata } from "@/lib/metadata";
 import { PageIntro } from "@/components/PageIntro";
-import { ContentPlaceholder } from "@/components/ContentPlaceholder";
+import { PortableTextContent } from "@/components/PortableTextContent";
+import { EmptyContentCta } from "@/components/EmptyContentCta";
+import { client } from "@/sanity/lib/client";
+import { pageBySlugQuery } from "@/sanity/lib/queries";
+import type { PageContent } from "@/sanity/lib/types";
 
 export const metadata: Metadata = buildMetadata({
   title: "За нас",
-  description: "Мисията и подходът на Градски Иконом към управлението на етажна собственост.",
+  description: "Научете повече за Градски Иконом.",
   path: "/za-nas",
 });
 
-export default function ZaNasPage() {
+export const revalidate = 60;
+
+export default async function ZaNasPage() {
+  const page = await client.fetch<PageContent | null>(pageBySlugQuery, { slug: "za-nas" });
+
   return (
     <PageIntro
       eyebrow="За нас"
-      title="Кой стои зад Градски Иконом"
-      description="Екип, посветен на професионалното, прозрачно и модерно управление на етажна собственост."
+      title={page?.title || "За нас"}
+      description={page?.description || "Научете повече за Градски Иконом."}
     >
-      <ContentPlaceholder />
+      {page?.body?.length ? (
+        <div className="mt-10"><PortableTextContent body={page.body} /></div>
+      ) : (
+        <EmptyContentCta message="За повече информация за нас се свържете с екипа ни." />
+      )}
     </PageIntro>
   );
 }

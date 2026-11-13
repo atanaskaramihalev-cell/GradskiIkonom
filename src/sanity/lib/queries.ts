@@ -14,6 +14,10 @@ export const pageByKeyQuery = defineQuery(
   `*[_type == "page" && pageKey == $pageKey][0]`,
 );
 
+export const pageBySlugQuery = defineQuery(
+  `*[_type == "page" && slug.current == $slug][0]`,
+);
+
 export const galleryItemsQuery = defineQuery(
   `*[_type == "galleryItem"] | order(order asc)`,
 );
