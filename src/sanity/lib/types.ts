@@ -49,9 +49,19 @@ export type SiteSettings = {
   trustBadges?: TrustBadge[];
 };
 
+export type PricingPackage = {
+  _id: string;
+  name: string;
+  price: string;
+  unit?: string;
+  features?: string[];
+  highlighted?: boolean;
+  order?: number;
+};
+
 export type PageContent = {
   _id: string;
-  pageKey: "kak-rabotim" | "za-nas" | "remiox";
+  pageKey: "kak-rabotim" | "za-nas" | "remiox" | "uslugi" | "tseni";
   title: string;
   description?: string;
   body?: PortableTextBlock[];

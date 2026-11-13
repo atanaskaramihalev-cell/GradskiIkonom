@@ -13,6 +13,8 @@ export const page = defineType({
       options: {
         list: [
           { title: "Как работим", value: "kak-rabotim" },
+          { title: "Услуги", value: "uslugi" },
+          { title: "Цени", value: "tseni" },
           { title: "За нас", value: "za-nas" },
           { title: "REMIOX", value: "remiox" },
         ],
