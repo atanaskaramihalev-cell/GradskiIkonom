@@ -57,7 +57,6 @@ export type SiteSettings = {
 export type PageContent = {
   _id: string;
   pageKey?: "kak-rabotim" | "za-nas" | "remiox" | "poveritelnost";
-  slug?: { current: string };
   title: string;
   description?: string;
   body?: PortableTextBlock[];

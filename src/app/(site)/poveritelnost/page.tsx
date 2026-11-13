@@ -3,7 +3,7 @@ import { buildMetadata } from "@/lib/metadata";
 import { PageIntro } from "@/components/PageIntro";
 import { PortableTextContent } from "@/components/PortableTextContent";
 import { client } from "@/sanity/lib/client";
-import { pageBySlugQuery } from "@/sanity/lib/queries";
+import { pageByKeyQuery } from "@/sanity/lib/queries";
 import type { PageContent } from "@/sanity/lib/types";
 
 export const metadata: Metadata = buildMetadata({
@@ -15,7 +15,7 @@ export const metadata: Metadata = buildMetadata({
 export const revalidate = 60;
 
 export default async function PoveritelnostPage() {
-  const page = await client.fetch<PageContent | null>(pageBySlugQuery, { slug: "poveritelnost" });
+  const page = await client.fetch<PageContent | null>(pageByKeyQuery, { pageKey: "poveritelnost" });
 
   return (
     <PageIntro

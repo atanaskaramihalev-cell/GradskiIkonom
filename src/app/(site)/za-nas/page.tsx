@@ -4,7 +4,7 @@ import { PageIntro } from "@/components/PageIntro";
 import { PortableTextContent } from "@/components/PortableTextContent";
 import { EmptyContentCta } from "@/components/EmptyContentCta";
 import { client } from "@/sanity/lib/client";
-import { pageBySlugQuery } from "@/sanity/lib/queries";
+import { pageByKeyQuery } from "@/sanity/lib/queries";
 import type { PageContent } from "@/sanity/lib/types";
 
 export const metadata: Metadata = buildMetadata({
@@ -16,7 +16,7 @@ export const metadata: Metadata = buildMetadata({
 export const revalidate = 60;
 
 export default async function ZaNasPage() {
-  const page = await client.fetch<PageContent | null>(pageBySlugQuery, { slug: "za-nas" });
+  const page = await client.fetch<PageContent | null>(pageByKeyQuery, { pageKey: "za-nas" });
 
   return (
     <PageIntro

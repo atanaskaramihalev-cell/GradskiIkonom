@@ -21,20 +21,6 @@ export const page = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: "slug",
-      title: "Slug (URL адрес)",
-      description: 'За „За нас“ използвайте za-nas, а за политиката — poveritelnost.',
-      type: "slug",
-      options: { source: "title" },
-      validation: (rule) => rule.custom((value, context) => {
-        const pageKey = (context.document as { pageKey?: string } | undefined)?.pageKey;
-        if (pageKey === "za-nas" || pageKey === "poveritelnost") {
-          return value?.current ? true : "Добавете slug за тази страница.";
-        }
-        return true;
-      }),
-    }),
-    defineField({
       name: "title",
       title: "Заглавие",
       type: "string",
