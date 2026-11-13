@@ -1,13 +1,12 @@
 import { Section } from "@/components/ui/Section";
 import { Button } from "@/components/ui/Button";
-import { placeholderContact, primaryCta } from "@/lib/constants";
+import { primaryCta } from "@/lib/constants";
 import type { SiteSettings } from "@/sanity/lib/types";
 
 export function FinalCtaSection({ siteSettings }: { siteSettings?: SiteSettings | null }) {
   const ctaLabel = siteSettings?.primaryCtaLabel ?? primaryCta.label;
   const ctaHref = siteSettings?.primaryCtaHref ?? primaryCta.href;
-  const phone = siteSettings?.phone ?? placeholderContact.phone;
-  const email = siteSettings?.email ?? placeholderContact.email;
+  const contact = [siteSettings?.phone?.trim(), siteSettings?.email?.trim()].filter(Boolean);
 
   return (
     <Section className="text-center">
@@ -24,9 +23,9 @@ export function FinalCtaSection({ siteSettings }: { siteSettings?: SiteSettings 
         </Button>
       </div>
 
-      <p className="mt-6 text-sm text-foreground/50">
-        {phone} · {email}
-      </p>
+      {contact.length > 0 ? (
+        <p className="mt-6 text-sm text-foreground/50">{contact.join(" · ")}</p>
+      ) : null}
     </Section>
   );
 }

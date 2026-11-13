@@ -14,9 +14,8 @@ export const pricingPackage = defineType({
     defineField({
       name: "price",
       title: "Цена",
-      description: 'Напр. "0.80 лв" или "по договаряне"',
+      description: 'Напр. "12 €" или "по договаряне"',
       type: "string",
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "unit",

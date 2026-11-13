@@ -5,6 +5,11 @@ export const siteSettings = defineType({
   title: "Настройки на сайта",
   type: "document",
   fields: [
+    defineField({ name: "legalName", title: "Юридическо име", type: "string" }),
+    defineField({ name: "eik", title: "ЕИК", type: "string" }),
+    defineField({ name: "registeredAddress", title: "Седалище и адрес на управление", type: "string" }),
+    defineField({ name: "manager", title: "Управител", type: "string" }),
+    defineField({ name: "vatRegistered", title: "Регистрация по ЗДДС", type: "boolean" }),
     defineField({
       name: "phone",
       title: "Телефон",

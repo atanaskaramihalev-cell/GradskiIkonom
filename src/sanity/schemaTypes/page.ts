@@ -15,6 +15,7 @@ export const page = defineType({
           { title: "Как работим", value: "kak-rabotim" },
           { title: "За нас", value: "za-nas" },
           { title: "REMIOX", value: "remiox" },
+          { title: "Политика за поверителност", value: "poveritelnost" },
         ],
       },
       validation: (rule) => rule.required(),

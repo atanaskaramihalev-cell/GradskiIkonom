@@ -11,5 +11,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     url: new URL(`/${page.slug}`, siteConfig.url).toString(),
   }));
 
-  return [...staticRoutes, ...landingRoutes];
+  return [
+    ...staticRoutes,
+    { url: new URL("/poveritelnost", siteConfig.url).toString() },
+    ...landingRoutes,
+  ];
 }

@@ -5,10 +5,12 @@ export const siteConfig = {
   locale: "bg_BG",
 } as const;
 
-export const placeholderContact = {
-  phone: "[телефон предстои]",
-  email: "[имейл предстои]",
-  address: "[адрес предстои]",
+export const legalDefaults = {
+  legalName: "„Градски Иконом“ ЕООД",
+  eik: "208989397",
+  registeredAddress: "гр. София, ул. „Хемус“, бл. 61, вх. Б, ет. 12, ап. 118",
+  manager: "Атанас Карамихалев",
+  vatRegistered: false,
 } as const;
 
 export type NavItem = {
