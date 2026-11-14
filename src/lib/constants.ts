@@ -21,6 +21,7 @@ export type NavItem = {
 export const primaryNav: NavItem[] = [
   { label: "Начало", href: "/" },
   { label: "Услуги", href: "/uslugi" },
+  { label: "Управление на имоти под наем", href: "/upravlenie-na-imoti-pod-naem" },
   { label: "Как работим", href: "/kak-rabotim" },
   { label: "Галерия", href: "/galeriya" },
   { label: "Цени", href: "/tseni" },

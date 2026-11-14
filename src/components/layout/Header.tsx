@@ -23,7 +23,7 @@ export function Header({ siteSettings }: { siteSettings?: SiteSettings | null })
 
         <nav
           aria-label="Основна навигация"
-          className="hidden items-center gap-8 lg:flex"
+          className="hidden items-center gap-4 2xl:flex"
         >
           {primaryNav.map((item) => {
             const isActive =
@@ -43,7 +43,7 @@ export function Header({ siteSettings }: { siteSettings?: SiteSettings | null })
           })}
         </nav>
 
-        <div className="hidden lg:block">
+        <div className="hidden 2xl:block">
           <Button href={ctaHref} variant="primary">
             {ctaLabel}
           </Button>
@@ -51,7 +51,7 @@ export function Header({ siteSettings }: { siteSettings?: SiteSettings | null })
 
         <button
           type="button"
-          className="inline-flex items-center justify-center rounded-md p-2 text-foreground lg:hidden"
+          className="inline-flex items-center justify-center rounded-md p-2 text-foreground 2xl:hidden"
           aria-expanded={isMenuOpen}
           aria-controls="mobile-menu"
           aria-label={isMenuOpen ? "Затвори менюто" : "Отвори менюто"}
@@ -85,7 +85,7 @@ export function Header({ siteSettings }: { siteSettings?: SiteSettings | null })
       {isMenuOpen ? (
         <div
           id="mobile-menu"
-          className="border-t border-foreground/10 bg-background lg:hidden"
+          className="border-t border-foreground/10 bg-background 2xl:hidden"
         >
           <Container className="flex flex-col gap-1 py-4">
             {primaryNav.map((item) => {

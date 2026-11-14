@@ -1,4 +1,6 @@
 import { Hero } from "@/components/home/Hero";
+import { StartOffer } from "@/components/StartOffer";
+import { Section } from "@/components/ui/Section";
 import { TrustBadgesSection } from "@/components/home/TrustBadgesSection";
 import { ProblemSection } from "@/components/home/ProblemSection";
 import { ServicesSection } from "@/components/home/ServicesSection";
@@ -29,6 +31,7 @@ export default async function HomePage() {
     <>
       <OrganizationJsonLd siteSettings={siteSettings} />
       <Hero siteSettings={siteSettings} />
+      <Section><StartOffer /></Section>
       <TrustBadgesSection badges={siteSettings?.trustBadges ?? []} />
       <ProblemSection />
       <ServicesSection />

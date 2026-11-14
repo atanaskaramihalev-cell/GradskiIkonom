@@ -2,59 +2,92 @@ import type { Metadata } from "next";
 import { buildMetadata } from "@/lib/metadata";
 import { PageIntro } from "@/components/PageIntro";
 import { Button } from "@/components/ui/Button";
-import { EmptyContentCta } from "@/components/EmptyContentCta";
-import { client } from "@/sanity/lib/client";
-import { pricingPackagesQuery } from "@/sanity/lib/queries";
-import type { PricingPackage } from "@/sanity/lib/types";
+import { StartOffer } from "@/components/StartOffer";
+import { additionalServices, basicFeatures, finalPricesNote, packageRates, plusFeatures, promotionMinimumNote } from "@/data/current-offers";
 
 export const metadata: Metadata = buildMetadata({
   title: "Цени",
-  description: "Информация за цените на услугите на Градски Иконом.",
+  description: "Пакети и цени за управление на етажна собственост от Градски Иконом.",
   path: "/tseni",
 });
 
-export const revalidate = 60;
-
-export default async function TseniPage() {
-  const packages = await client.fetch<PricingPackage[]>(pricingPackagesQuery);
-
+export default function TseniPage() {
   return (
     <PageIntro
       eyebrow="Цени"
-      title="Цени"
-      description="Разгледайте ценовите пакети и се свържете с нас за подробности."
+      title="Цени за управление на етажна собственост"
+      description="Изберете пакет според нуждите на вашия вход. Всички цени са в евро."
     >
-      {packages.length > 0 ? (
-        <>
-          <ul className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {packages.map((item) => (
-              <li
-                key={item._id}
-                className={`rounded-2xl border p-6 ${item.highlighted ? "border-accent bg-accent/[0.04] shadow-sm" : "border-foreground/10"}`}
-              >
-                {item.highlighted ? (
-                  <span className="text-xs font-semibold uppercase tracking-wide text-accent">Препоръчан пакет</span>
-                ) : null}
-                <h2 className="mt-2 font-serif text-xl font-semibold text-foreground">{item.name}</h2>
-                <p className="mt-5 text-2xl font-semibold text-foreground">
-                  {item.price?.trim() || "Цена по запитване"}
-                </p>
-                {item.unit ? <p className="mt-1 text-sm text-foreground/60">{item.unit}</p> : null}
-                {item.features?.length ? (
-                  <ul className="mt-6 list-disc space-y-2 pl-5 text-sm leading-6 text-foreground/70">
-                    {item.features.map((feature, index) => <li key={`${index}-${feature}`}>{feature}</li>)}
-                  </ul>
-                ) : null}
-              </li>
-            ))}
-          </ul>
-          <div className="mt-10">
-            <Button href="/kontakti">Свържете се с нас</Button>
+      <section aria-labelledby="paketi" className="mt-12">
+        <h2 id="paketi" className="font-serif text-2xl font-semibold text-foreground sm:text-3xl">Пакети</h2>
+        <div className="mt-6 grid gap-4 sm:hidden">
+          {(["basic", "plus"] as const).map((key) => (
+            <div key={key} className="rounded-2xl border border-foreground/10 bg-background p-5">
+              <h3 className="font-serif text-xl font-semibold">{key === "basic" ? "Основен" : "Плюс"}</h3>
+              <dl className="mt-4 space-y-4">
+                {packageRates.map((rate) => (
+                  <div key={rate.label}>
+                    <dt className="text-sm text-foreground/60">{rate.label}</dt>
+                    <dd className="mt-1 font-semibold text-foreground">{rate[key]}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          ))}
+        </div>
+        <div className="mt-6 hidden overflow-hidden rounded-2xl border border-foreground/10 sm:block">
+          <table className="w-full border-collapse text-left text-sm">
+            <thead className="bg-foreground/[0.04] text-foreground">
+              <tr><th scope="col" className="p-4">Обект</th><th scope="col" className="p-4">Основен</th><th scope="col" className="p-4">Плюс</th></tr>
+            </thead>
+            <tbody>
+              {packageRates.map((rate) => (
+                <tr key={rate.label} className="border-t border-foreground/10">
+                  <th scope="row" className="p-4 font-medium">{rate.label}</th>
+                  <td className="p-4">{rate.basic}</td><td className="p-4">{rate.plus}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p className="mt-4 text-sm leading-6 text-foreground/70">{promotionMinimumNote}</p>
+        <p className="mt-2 text-sm leading-6 text-foreground/70">{finalPricesNote}</p>
+        <div className="mt-8 grid gap-6 md:grid-cols-2">
+          <div className="rounded-2xl border border-foreground/10 p-6">
+            <h3 className="font-serif text-xl font-semibold">Пакет „Основен“ включва</h3>
+            <ul className="mt-4 list-disc space-y-2 pl-5 text-sm leading-6 text-foreground/70">
+              {basicFeatures.map((feature) => <li key={feature}>{feature}</li>)}
+            </ul>
           </div>
-        </>
-      ) : (
-        <EmptyContentCta message="За информация за цените се свържете с нас." />
-      )}
+          <div className="rounded-2xl border border-accent/30 bg-accent/[0.04] p-6">
+            <h3 className="font-serif text-xl font-semibold">Пакет „Плюс“ включва</h3>
+            <ul className="mt-4 list-disc space-y-2 pl-5 text-sm leading-6 text-foreground/70">
+              {plusFeatures.map((feature) => <li key={feature}>{feature}</li>)}
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <div className="mt-14"><StartOffer /></div>
+
+      <section aria-labelledby="dopalnitelni" className="mt-14">
+        <h2 id="dopalnitelni" className="font-serif text-2xl font-semibold text-foreground sm:text-3xl">Допълнителни услуги</h2>
+        <p className="mt-3 text-base leading-7 text-foreground/70">Тези услуги не са включени в месечната такса. Плащат се по ценоразпис след одобрение.</p>
+        <dl className="mt-6 divide-y divide-foreground/10 rounded-2xl border border-foreground/10 sm:hidden">
+          {additionalServices.map((item) => (
+            <div key={item.service} className="p-5"><dt className="font-medium">{item.service}</dt><dd className="mt-2 text-sm text-foreground/70">{item.price}</dd></div>
+          ))}
+        </dl>
+        <div className="mt-6 hidden overflow-hidden rounded-2xl border border-foreground/10 sm:block">
+          <table className="w-full border-collapse text-left text-sm">
+            <thead className="bg-foreground/[0.04]"><tr><th scope="col" className="w-2/3 p-4">Услуга</th><th scope="col" className="p-4">Цена</th></tr></thead>
+            <tbody>{additionalServices.map((item) => (
+              <tr key={item.service} className="border-t border-foreground/10"><th scope="row" className="p-4 font-medium">{item.service}</th><td className="p-4">{item.price}</td></tr>
+            ))}</tbody>
+          </table>
+        </div>
+      </section>
+      <div className="mt-10"><Button href="/kontakti">Свържете се с нас</Button></div>
     </PageIntro>
   );
 }

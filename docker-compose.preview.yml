@@ -1,0 +1,28 @@
+name: gradskiikonom-preview
+
+services:
+  web:
+    container_name: gradskiikonom-preview-web
+    build:
+      context: .
+      dockerfile: Dockerfile.preview
+      args:
+        NEXT_PUBLIC_SANITY_PROJECT_ID: ${NEXT_PUBLIC_SANITY_PROJECT_ID:?Set the public Sanity project ID}
+        NEXT_PUBLIC_SANITY_DATASET: ${NEXT_PUBLIC_SANITY_DATASET:?Set the public Sanity dataset}
+        NEXT_PUBLIC_SANITY_API_VERSION: ${NEXT_PUBLIC_SANITY_API_VERSION:-2025-01-01}
+    environment:
+      NEXT_PUBLIC_SANITY_PROJECT_ID: ${NEXT_PUBLIC_SANITY_PROJECT_ID:?Set the public Sanity project ID}
+      NEXT_PUBLIC_SANITY_DATASET: ${NEXT_PUBLIC_SANITY_DATASET:?Set the public Sanity dataset}
+      NEXT_PUBLIC_SANITY_API_VERSION: ${NEXT_PUBLIC_SANITY_API_VERSION:-2025-01-01}
+    restart: unless-stopped
+    expose:
+      - "3000"
+    networks:
+      - remiox_frontend
+    security_opt:
+      - no-new-privileges:true
+
+networks:
+  remiox_frontend:
+    external: true
+    name: blockwise-staging_frontend
