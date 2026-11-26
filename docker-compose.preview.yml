@@ -1,7 +1,8 @@
 name: gradskiikonom-preview
 
 services:
-  web:
+  preview-app:
+    image: gradskiikonom-preview-web
     container_name: gradskiikonom-preview-web
     build:
       context: .

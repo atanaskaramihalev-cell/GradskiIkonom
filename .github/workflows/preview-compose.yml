@@ -1,0 +1,27 @@
+name: Preview Compose contract
+on:
+  pull_request:
+    paths: [docker-compose.preview.yml, .github/workflows/preview-compose.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  compose:
+    runs-on: ubuntu-latest
+    env:
+      NEXT_PUBLIC_SANITY_PROJECT_ID: synthetic
+      NEXT_PUBLIC_SANITY_DATASET: test
+    steps:
+      - uses: actions/checkout@v7
+      - name: Validate unique service and preserved image
+        run: |
+          docker compose -f docker-compose.preview.yml config --format json > /tmp/preview-compose.json
+          python3 - <<'PY'
+          import json
+          config=json.load(open('/tmp/preview-compose.json'))
+          assert set(config['services']) == {'preview-app'}
+          service=config['services']['preview-app']
+          assert service['container_name']=='gradskiikonom-preview-web'
+          assert service['image']=='gradskiikonom-preview-web'
+          assert config['networks']['remiox_frontend']['name']=='blockwise-staging_frontend'
+          PY
